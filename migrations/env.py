@@ -19,9 +19,9 @@ sys.path.append(str(ROOT_DIR))
 load_dotenv(ROOT_DIR / ".env")
 
 # 3. Get the DATABASE_URL from .env file
-DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URI")
+DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URL")
 if not DATABASE_URL:
-    raise RuntimeError("SQLALCHEMY_DATABASE_URI not found in .env")
+    raise RuntimeError("SQLALCHEMY_DATABASE_URL not found in .env")
 
 # 4. configure Alembic
 

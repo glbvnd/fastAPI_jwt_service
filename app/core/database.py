@@ -4,7 +4,7 @@ from .config import settings
 
 
 
-DATABASE_URL= settings.SQLALCHEMY_BASE_URL
+DATABASE_URL= settings.SQLALCHEMY_DATABASE_URL
 
 connect_args ={}
 if DATABASE_URL.startswith("sqlile"):
