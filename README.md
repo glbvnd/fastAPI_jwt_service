@@ -341,19 +341,19 @@ If your project uses a different Docker setup, update this section accordingly.
 
 ### Swagger UI
 
-![Swagger UI](./routers.png)
+![Swagger UI](./docs/screenshots/routers.png)
 
 ### Register Endpoint
 
-![Register](./register.png)
+![Register](./docs/screenshots/register.png)
 
 ### Login Endpoint
 
-![Login](./login.png)
+![Login](./docs/screenshots/login.png)
 
 ### Protected Route
 
-![Protected Route](./me.png)
+![Protected Route](./docs/screenshots/me.png)
 
 ### Schemas
 
