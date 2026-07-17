@@ -82,7 +82,7 @@ This project is designed with a clean layered architecture and focuses on authen
 
 
 </details>
----
+
 ## Project Structure
 
 ```text
