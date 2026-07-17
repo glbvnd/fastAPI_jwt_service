@@ -46,7 +46,7 @@ This project is designed with a clean layered architecture and focuses on authen
 
 ## Project Structure
 
-```text
+````text
 project-root/
 ├── api/                 # API application versions
 │   ├── v1/
@@ -57,8 +57,8 @@ project-root/
 │   ├── repositories/    # data access layer
 │   ├── models/          # SQLAlchemy models
 │   ├── schemas/         # Pydantic schemas
-│   └── core/            # config, security, cookies, dependencies,database setup  
-│       
+│   └── core/            # config, security, cookies, dependencies,database setup
+│
 ├── migrations/          # migration files
 ├── tests/               # automated tests
 ├── docker/              # Docker-related files
@@ -95,7 +95,7 @@ This structure improves readability, testability, and scalability as the project
 ```bash
 git clone https://github.com/glbvnd/fastAPI_jwt_service.git
 cd fastAPI_jwt_service
-```
+````
 
 ### 2. Create and activate a virtual environment
 
@@ -132,10 +132,10 @@ cp .env.sample .env
 Example configuration:
 
 ```env
-DATABASE_URL=postgresql://user:password@localhost:5432/auth_db
-SECRET_KEY=supersecretkey
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
+SQLALCHEMY_DATABASE_URL= postgresql://user:password@localhost:5432/auth_db
+JWT_SECRET_KEY= supersecretkey
+ACCESS_TOKEN_EXPIRE_MINUTES= 15 #minuts
+REFRESH_TOKEN_EXPIRE_DAYS= 7 #days
 ```
 
 ### 5. Run database migrations
@@ -340,19 +340,24 @@ If your project uses a different Docker setup, update this section accordingly.
 ## Screenshots
 
 ### Swagger UI
+
 ![Swagger UI](./routers.png)
 
 ### Register Endpoint
+
 ![Register](./register.png)
 
 ### Login Endpoint
+
 ![Login](./login.png)
 
 ### Protected Route
+
 ![Protected Route](./me.png)
 
 ### Schemas
-![Schemas](./Schemas.png)
+
+![Schemas](./docs/screenshots/schemas.png)
 
 ---
 
@@ -365,4 +370,7 @@ This project is being developed as a learning-focused backend service with real-
 ## License
 
 This project is licensed under the MIT License.
+
+```
+
 ```
