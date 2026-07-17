@@ -1,7 +1,4 @@
-حتماً — این نسخه تمیزتر، کامل‌تر و حرفه‌ای‌تره و بخش `Middleware` و `Production Readiness` هم داخلش دیده شده.  
-من متن را طوری نوشتم که هم برای GitHub خوب باشد، هم برای رزومه و هم صادقانه بگوید چه چیزهایی الان پیاده شده و چه چیزهایی برای production باید تنظیم شوند.
-
-```md
+````md
 # FastAPI Identity Service
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue)
@@ -49,20 +46,25 @@ This project is designed with a clean layered architecture and focuses on authen
 ---
 
 ## Project Structure
-```text
+
+````text
 project-root/
+├── api/                 # API application versions
+│   ├── v1/
+    │   ├── auth_v1.py   # FastAPI application entry point
 ├── app/
 │   ├── routers/         # API routes
 │   ├── services/        # business logic layer
 │   ├── repositories/    # data access layer
 │   ├── models/          # SQLAlchemy models
 │   ├── schemas/         # Pydantic schemas
-│   ├── core/            # config, security, database setup
-│   └── main.py          # FastAPI application entry point
-├── alembic/             # migration files
+│   └── core/            # config, security, cookies, dependencies,database setup  
+│       
+├── migrations/          # migration files
 ├── tests/               # automated tests
 ├── docker/              # Docker-related files
 │   ├── Dockerfile
+│   ├──.dockerignore
 │   └── docker-compose.yml
 ├── requirements.txt
 ├── .env.sample
@@ -94,7 +96,8 @@ This structure improves readability, testability, and scalability as the project
 ```bash
 git clone https://github.com/glbvnd/fastAPI_jwt_service.git
 cd fastAPI_jwt_service
-```
+````
+````
 
 ### 2. Create and activate a virtual environment
 
@@ -324,12 +327,12 @@ If your project uses a different Docker setup, update this section accordingly.
 
 ## Environment Variables
 
-| Variable | Description |
-| --- | --- |
-| `DATABASE_URL` | PostgreSQL connection string |
-| `SECRET_KEY` | Secret key used to sign JWT tokens |
-| `ALGORITHM` | JWT signing algorithm |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Access token expiration time |
+| Variable                      | Description                        |
+| ----------------------------- | ---------------------------------- |
+| `DATABASE_URL`                | PostgreSQL connection string       |
+| `SECRET_KEY`                  | Secret key used to sign JWT tokens |
+| `ALGORITHM`                   | JWT signing algorithm              |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | Access token expiration time       |
 
 ---
 
@@ -340,15 +343,15 @@ You can add project screenshots to make the repository more presentable.
 Suggested examples:
 
 - Swagger UI
-![Swagger UI](docs/screenshots/swaggerUI.png)
+  ![Swagger UI](docs/screenshots/swaggerUI.png)
 - Register endpoint
-![Register](docs/screenshots/register.png) 
+  ![Register](docs/screenshots/register.png)
 - Login endpoint
-![Login](docs/screenshots/login.png) 
-- Protected route example 
-![Protected Route](docs/screenshots/me.png) 
+  ![Login](docs/screenshots/login.png)
+- Protected route example
+  ![Protected Route](docs/screenshots/me.png)
 - Schemas
-![Schemas](docs/screenshots/schemas.png) 
+  ![Schemas](docs/screenshots/schemas.png)
 
 Example structure:
 
@@ -379,15 +382,5 @@ This project is being developed as a learning-focused backend service with real-
 ## License
 
 This project is licensed under the MIT License.
+
 ```
-
-چند نکته برای بهتر شدن نهایی README:
-- اگر routeهای واقعی‌ات `auth` نیستند، حتماً endpointها را با مسیر واقعی خودت جایگزین کن
-- اگر از cookie-based auth استفاده می‌کنی، می‌توانم بخش cookie security را هم دقیق‌تر و حرفه‌ای‌تر کنم
-- اگر middlewareهای دیگری مثل logging یا exception handling هم داری، خوبه آن‌ها را هم در بخش `Middleware` اضافه کنیم
-- اگر خواستی README خیلی رزومه‌ای‌تر شود، می‌توانم یک نسخه کوتاه‌تر و شیک‌تر هم بدهم
-
-اگر بخواهی، قدم بعدی می‌توانم یکی از این‌ها را انجام بدهم:
-1. README را با routeهای واقعی پروژه‌ات دقیقاً شخصی‌سازی کنم
-2. یک `.env.sample` حرفه‌ای هم کنارش بنویسم
-3. بخش `Tests` و `Production Readiness` را مخصوص پروژه خودت قوی‌تر کنم
