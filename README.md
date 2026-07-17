@@ -1,4 +1,4 @@
-````md
+```md
 # FastAPI Identity Service
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue)
@@ -8,7 +8,7 @@
 ![Alembic](https://img.shields.io/badge/Migrations-Alembic-purple)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-A production-style authentication and identity service built with **FastAPI**, **PostgreSQL**, and **JWT**.
+A production-style authentication and identity service built with FastAPI, PostgreSQL, and JWT.
 
 This project is designed with a clean layered architecture and focuses on authentication workflows, database integration, environment-based configuration, and API scalability. It is intended as a backend learning project built with production-oriented development practices in mind.
 
@@ -51,7 +51,7 @@ This project is designed with a clean layered architecture and focuses on authen
 project-root/
 ├── api/                 # API application versions
 │   ├── v1/
-    │   ├── auth_v1.py   # FastAPI application entry point
+│       ├── auth_v1.py   # FastAPI application entry point
 ├── app/
 │   ├── routers/         # API routes
 │   ├── services/        # business logic layer
@@ -78,12 +78,12 @@ project-root/
 
 This project follows a layered architecture to keep responsibilities separated and the codebase easier to maintain.
 
-- **Routers** handle HTTP requests and responses
-- **Services** contain business logic
-- **Repositories** manage database operations
-- **Schemas** define request and response validation
-- **Models** represent database tables
-- **Core** contains configuration, security, and database setup
+- Routers handle HTTP requests and responses
+- Services contain business logic
+- Repositories manage database operations
+- Schemas define request and response validation
+- Models represent database tables
+- Core contains configuration, security, cookies, dependencies, and database setup
 
 This structure improves readability, testability, and scalability as the project grows.
 
@@ -96,8 +96,7 @@ This structure improves readability, testability, and scalability as the project
 ```bash
 git clone https://github.com/glbvnd/fastAPI_jwt_service.git
 cd fastAPI_jwt_service
-````
-````
+```
 
 ### 2. Create and activate a virtual environment
 
@@ -161,20 +160,24 @@ http://127.0.0.1:8000
 Swagger documentation:
 
 ```text
-http://127.0.0.1:8000/docs
+http://127.0.0.1:8000/swagger
 ```
 
-ReDoc documentation:
+---
+
+## API Documentation
+
+The API provides interactive documentation and endpoint testing through Swagger UI.
+
+You can explore and test authentication endpoints directly at:
 
 ```text
-http://127.0.0.1:8000/redoc
+http://127.0.0.1:8000/swagger
 ```
 
 ---
 
 ## API Endpoints
-
-Below are example authentication-related endpoints. Update these paths if your actual routes use a different prefix.
 
 ### Register
 
@@ -223,14 +226,14 @@ Authorization: Bearer <access_token>
 
 ## Middleware
 
-The project currently includes **CORS middleware** for handling cross-origin requests during development.
+The project includes CORS middleware for handling cross-origin requests.
 
-Example development configuration:
+Example configuration:
 
 ```python
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[],
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -239,8 +242,8 @@ app.add_middleware(
 
 ### Notes
 
-- `CORSMiddleware` is already integrated into the application
-- CORS settings should be configured differently for development and production
+- `CORSMiddleware` is integrated into the application
+- CORS settings should be different for development and production
 - In production, `allow_origins` should contain only trusted frontend domains
 - Credential-based requests should be enabled only when required by the authentication flow
 
@@ -248,7 +251,7 @@ app.add_middleware(
 
 ## Production Readiness
 
-This project is built with several production-oriented ideas in mind, even if some parts may still be under active development.
+This project is built with several production-oriented ideas in mind, even if some parts are still under active development.
 
 ### Implemented or Intended Practices
 
@@ -268,7 +271,6 @@ This project is built with several production-oriented ideas in mind, even if so
 - Use HTTPS in deployment
 - Use `HttpOnly`, `Secure`, and `SameSite` cookie settings if cookies are used for authentication
 - Run the application behind a reverse proxy such as Nginx
-- Use process managers or container orchestration for reliability
 - Add structured logging and monitoring
 - Add rate limiting for authentication endpoints
 - Add refresh token rotation if using long-lived sessions
@@ -338,38 +340,20 @@ If your project uses a different Docker setup, update this section accordingly.
 
 ## Screenshots
 
-You can add project screenshots to make the repository more presentable.
+### Swagger UI
+![Swagger UI](./routers.png)
 
-Suggested examples:
+### Register Endpoint
+![Register](./register.png)
 
-- Swagger UI
-  ![Swagger UI](docs/screenshots/swaggerUI.png)
-- Register endpoint
-  ![Register](docs/screenshots/register.png)
-- Login endpoint
-  ![Login](docs/screenshots/login.png)
-- Protected route example
-  ![Protected Route](docs/screenshots/me.png)
-- Schemas
-  ![Schemas](docs/screenshots/schemas.png)
+### Login Endpoint
+![Login](./login.png)
 
-Example structure:
+### Protected Route
+![Protected Route](./me.png)
 
-```text
-docs/
-└── screenshots/
-    ├── swagger.png
-    ├── register.png
-    ├── login.png
-    ├── schemas.png
-    └── me.png
-```
-
-Then reference them like this:
-
-```md
-![Swagger UI](docs/screenshots/swagger.png)
-```
+### Schemas
+![Schemas](./Schemas.png)
 
 ---
 
@@ -382,5 +366,4 @@ This project is being developed as a learning-focused backend service with real-
 ## License
 
 This project is licensed under the MIT License.
-
 ```
