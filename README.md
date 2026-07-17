@@ -76,8 +76,8 @@ project-root
 ### 1. Clone the repository
 
 ```
-git clone https://github.com/yourusername/fastapi-auth-service.git
-cd fastapi-auth-service
+git clone https://github.com/glbvnd/FastAPI-JWT-service.git
+cd FastAPI-JWT-service
 ```
 
 ---
