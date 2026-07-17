@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import (
 from sqlalchemy.orm import DeclarativeBase
 from .config import settings
 
-DATABASE_URL = settings.SQLALCHEMY_DATABASE_URL
+DATABASE_URL = settings.DATABASE_URL
 
 connect_args = {}
 if DATABASE_URL.startswith("sqlite"):

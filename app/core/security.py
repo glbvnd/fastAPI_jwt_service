@@ -24,7 +24,7 @@ class PasswordService(UserModel):
 
 class JwtHandeler:
 
-    SECRET_KEY = settings.JWT_SECRET_KEY
+    SECRET_KEY = settings.SECRET_KEY
     ALGORITHM = "HS256"
 
     @classmethod

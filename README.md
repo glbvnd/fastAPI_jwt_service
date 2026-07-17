@@ -50,7 +50,7 @@ This project is designed with a clean layered architecture and focuses on authen
 </p>
 
 <details>
-  <summary><b>Click to expand/collapse project screenshots</b></summary>
+  <summary><b>💢Click to see more screenshots</b></summary>
 
 ### Swagger UI
 
@@ -171,11 +171,21 @@ cp .env.sample .env
 Example configuration:
 
 ```env
-SQLALCHEMY_DATABASE_URL= postgresql://user:password@localhost:5432/auth_db
-JWT_SECRET_KEY= supersecretkey
-ACCESS_TOKEN_EXPIRE_MINUTES= 15 #minuts
-REFRESH_TOKEN_EXPIRE_DAYS= 7 #days
+DATABASE_URL= postgresql://user:password@localhost:5432/auth_db
+SECRET_KEY= supersecretkey
+ACCESS_TOKEN_EXPIRE_MINUTES= minutes
+REFRESH_TOKEN_EXPIRE_DAYS= days
 ```
+
+#### Environment Variables
+
+| Variable                      | Description                        |
+| ----------------------------- | ---------------------------------- |
+| `DATABASE_URL`                | PostgreSQL connection string       |
+| `SECRET_KEY`                  | Secret key used to sign JWT tokens |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | Access token expiration time(minutes)|
+| `REFRESH_TOKEN_EXPIRE_MINUTES`| Refresh token expiration time(days)|
+---
 
 ### 5. Run database migrations
 
@@ -214,17 +224,32 @@ http://127.0.0.1:8000/swagger
 ```
 
 ---
-
 ## API Endpoints
+
+### Current User
+
+```http
+GET /AuthService/me
+```
+
+Retrieves the authenticated user's profile information.
+
+**Example header:**
+```http
+Authorization: Bearer <access_token>
+```
+
+---
 
 ### Register
 
 ```http
-POST /auth/register
+POST /AuthService/register
 ```
 
-Example request body:
+Registers a new user.
 
+**Example request body:**
 ```json
 {
   "email": "user@example.com",
@@ -233,14 +258,17 @@ Example request body:
 }
 ```
 
+---
+
 ### Login
 
 ```http
-POST /auth/login
+POST /AuthService/login
 ```
 
-Example response:
+Authenticates a user and returns an access token.
 
+**Example response:**
 ```json
 {
   "access_token": "your_jwt_token",
@@ -248,26 +276,61 @@ Example response:
 }
 ```
 
-### Current User
+---
+
+### Delete Account
 
 ```http
-GET /auth/me
+POST /AuthService/delete_account
 ```
 
-Example header:
+Deletes the authenticated user's account.
 
+**Example header:**
 ```http
 Authorization: Bearer <access_token>
 ```
 
 ---
 
+### Refresh Token
+
+```http
+POST /AuthService/refresh_endpoint
+```
+
+Generates a new access token using a valid refresh token.
+
+---
+
+### Logout
+
+```http
+POST /AuthService/logout
+```
+
+Logs out the current session.
+
+---
+
+### Global Logout
+
+```http
+POST /AuthService/global_logout
+```
+
+Logs out all active sessions for the current user
+
+---
+
 ## Middleware
 
 The project includes CORS middleware for handling cross-origin requests.
+```text
+api/v1/auth_v1.py
+```
 
-Example configuration:
-
+configuration in develope mood:
 ```python
 app.add_middleware(
     CORSMiddleware,
@@ -278,6 +341,31 @@ app.add_middleware(
 )
 ```
 
+configuration in Production mood:
+```python
+app.add_middleware(
+    CORSMiddleware,
+    # Allow only trusted frontend domains in production
+    # Add every browser client origin that should be able to call this API
+    allow_origins=[
+        "https://yourdomain.com",
+        "https://www.yourdomain.com",
+    ],
+
+    # Keep this True if your frontend sends cookies, sessions,
+    # or authenticated cross-origin requests
+    allow_credentials=True,
+
+    # Prefer listing only the HTTP methods your API actually uses
+    # instead of allowing everything with "*"
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+
+    # Allow only the headers your frontend needs to send
+    # These are commonly enough for JWT-based APIs
+    allow_headers=["Authorization", "Content-Type"],
+)
+
+```
 ### Notes
 
 - `CORSMiddleware` is integrated into the application
@@ -285,7 +373,27 @@ app.add_middleware(
 - In production, `allow_origins` should contain only trusted frontend domains
 - Credential-based requests should be enabled only when required by the authentication flow
 
+
 ---
+## Cookies Settings
+```text
+app/core/cookie.py
+```
+configuration in develope mood:
+```python
+@dataclass(frozen=True)
+class CookieSettings:
+    access_name: str = "access_token"
+    refresh_name: str = "refresh_token"
+    secure: bool = False  # True in productions(HTTPS)
+    samesite: str = "lax"  # lax |strict |none
+    domain: str | None = None  # e.g. ".example.com"
+    path: str = "/"
+    access_ttl: timedelta = timedelta(minutes=15)
+    refresh_ttl: timedelta = timedelta(days=7)
+
+```
+
 
 ## Production Readiness
 
@@ -362,17 +470,6 @@ docker-compose up --build
 ```
 
 If your project uses a different Docker setup, update this section accordingly.
-
----
-
-## Environment Variables
-
-| Variable                      | Description                        |
-| ----------------------------- | ---------------------------------- |
-| `DATABASE_URL`                | PostgreSQL connection string       |
-| `SECRET_KEY`                  | Secret key used to sign JWT tokens |
-| `ALGORITHM`                   | JWT signing algorithm              |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Access token expiration time       |
 
 ---
 

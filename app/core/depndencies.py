@@ -8,9 +8,8 @@ from app.service.user_service import AccountService
 from jose import jwt, JWTError
 from .config import settings
 
+
 # Auth Service
-
-
 async def get_auth_service(db: AsyncSession = Depends(get_db)) -> AuthService:
     user_repo = UserRepository(db=db)
     token_repo = TokenRepository(db=db)
@@ -36,7 +35,7 @@ async def get_current_user_by_cookie(
         )
     try:
         payload = jwt.decode(
-            token=access_token, key=settings.JWT_SECRET_KEY, algorithms=["HS256"]
+            token=access_token, key=settings.SECRET_KEY, algorithms=['HS256']
         )  # ->dict
         user_public_id = payload.get("sub")
 
