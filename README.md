@@ -50,7 +50,7 @@ This project is designed with a clean layered architecture and focuses on authen
 project-root/
 ├── api/                 # API application versions
 │   ├── v1/
-│       ├── auth_v1.py   # FastAPI application entry point
+│       └── auth_v1.py   # FastAPI application entry point
 ├── app/
 │   ├── routers/         # API routes
 │   ├── services/        # business logic layer
