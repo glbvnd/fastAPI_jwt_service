@@ -1,4 +1,3 @@
-```md
 # FastAPI Identity Service
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue)
@@ -47,7 +46,7 @@ This project is designed with a clean layered architecture and focuses on authen
 
 ## Project Structure
 
-````text
+```text
 project-root/
 ├── api/                 # API application versions
 │   ├── v1/
