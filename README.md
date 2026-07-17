@@ -43,10 +43,46 @@ This project is designed with a clean layered architecture and focuses on authen
 - Docker
 
 ---
+## Screenshots
 <p align="center">
   <img src="./docs/screenshots/swaggerui.png" alt="Swagger UI" width="35%"/>
   <img src="./docs/screenshots/me.png" alt="Protected Route" width="45%"/>
 </p>
+
+<details>
+  <summary><b>Click to expand/collapse project screenshots</b></summary>
+
+### Swagger UI
+
+![Swagger UI](./docs/screenshots/swaggerui.png)
+
+### Protected Route
+
+![Protected Route](./docs/screenshots/me.png)
+
+### Register Endpoint
+
+![Register](./docs/screenshots/register.png)
+
+### Login Endpoint
+
+![Login](./docs/screenshots/login.png)
+
+### Delete Account Endpoint
+
+![Login](./docs/screenshots/delete_account.png)
+
+### Global Logout Endpoint
+
+![Login](./docs/screenshots/global_logout.png)
+
+### Refresh Token Endpoint
+
+![Login](./docs/screenshots/refreshToken.png)
+
+
+</details>
+---
 ## Project Structure
 
 ```text
@@ -340,29 +376,7 @@ If your project uses a different Docker setup, update this section accordingly.
 
 ---
 
-## Screenshots
 
-<details>
-  <summary><b>Click to expand/collapse project screenshots</b></summary>
-
-### Swagger UI
-
-![Swagger UI](./docs/screenshots/swaggerui.png)
-
-### Register Endpoint
-
-![Register](./docs/screenshots/register.png)
-
-### Login Endpoint
-
-![Login](./docs/screenshots/login.png)
-
-### Protected Route
-
-![Protected Route](./docs/screenshots/me.png)
-
-</details>
----
 
 ## Development Notes
 
