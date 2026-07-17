@@ -70,7 +70,7 @@ project-root/
 ├── alembic.ini
 ├── .gitignore
 └── README.md
-
+```
 ---
 
 ## Architecture
