@@ -23,22 +23,22 @@ async def lifespan(app: FastAPI):
 
 tags_metadata = [
     {
-        "name": "Authentication Service",
+        "name": "JWT Service",
         "version": "0.1",
         "description": "Protect of your system",
         "externalDocs": {
-            "description": "More about me",
+            "description": "More about fastapi",
             "url": "https://fastapi.tiangolo.com/advanced/",
         },
     }
 ]
 app = FastAPI(
-    title="Auth Service",
-    description="time will Up",
+    title="JWT Service",
+    description="Authentication API built with FastAPI, JWT, Cookie, clean architecture, and Docker",
     version="0.0.1",
     terms_of_service="https://example.com/terms/",
     contact={
-        "name": "Nexus",
+        "name": "Sarah Golabvand",
         "url": "https://glbvnd.io",
         "email": "s.golabavand1@gmail.com",
     },

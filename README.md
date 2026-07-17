@@ -1,73 +1,89 @@
+حتماً — این نسخه تمیزتر، کامل‌تر و حرفه‌ای‌تره و بخش `Middleware` و `Production Readiness` هم داخلش دیده شده.  
+من متن را طوری نوشتم که هم برای GitHub خوب باشد، هم برای رزومه و هم صادقانه بگوید چه چیزهایی الان پیاده شده و چه چیزهایی برای production باید تنظیم شوند.
+
+```md
 # FastAPI Identity Service
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
 ![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+![Alembic](https://img.shields.io/badge/Migrations-Alembic-purple)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-A production‑style authentication service built with **FastAPI**, **PostgreSQL**, and **JWT**, following a **clean layered architecture**.  
-This project demonstrates best practices for building scalable backend APIs including authentication, database migrations, containerization, and automated testing.
+A production-style authentication and identity service built with **FastAPI**, **PostgreSQL**, and **JWT**.
+
+This project is designed with a clean layered architecture and focuses on authentication workflows, database integration, environment-based configuration, and API scalability. It is intended as a backend learning project built with production-oriented development practices in mind.
 
 ---
 
-## Overview
-
-This service provides a modular authentication system including:
+## Features
 
 - User registration
-- Secure login
-- JWT token generation
-- Protected routes
-- Database migrations
+- User login
+- JWT-based authentication
+- Protected user endpoints
+- Password hashing and verification
+- Database integration with PostgreSQL
+- Database migrations with Alembic
 - Environment-based configuration
-
-The architecture separates business logic, database access, and API layers to keep the codebase maintainable and scalable.
+- Layered project structure using service and repository patterns
+- Middleware support for cross-origin requests
+- Automated API testing with Pytest
+- Docker-ready development workflow
 
 ---
 
 ## Tech Stack
 
 - FastAPI
+- Python
 - PostgreSQL
 - SQLAlchemy
 - Alembic
-- JWT (JSON Web Tokens)
 - Pydantic
+- JWT
 - Pytest
 - Docker
 
 ---
 
 ## Project Structure
-
-```
-project-root
-│
-├── app
-│   ├── routers          # API routes
-│   ├── services         # business logic
-│   ├── repositories     # database access layer
-│   ├── models           # SQLAlchemy models
-│   ├── schemas          # Pydantic schemas
-│   ├── core
-│   │   ├── config.py    # environment settings
-│   │   ├── database.py  # database session
-│   │   └── security.py  # JWT & password hashing
-│   │
-│   └── main.py          # FastAPI application entry
-│
-├── alembic              # database migrations
-├── alembic.ini
-│
-├── tests                # pytest tests
-│
+```text
+project-root/
+├── app/
+│   ├── routers/         # API routes
+│   ├── services/        # business logic layer
+│   ├── repositories/    # data access layer
+│   ├── models/          # SQLAlchemy models
+│   ├── schemas/         # Pydantic schemas
+│   ├── core/            # config, security, database setup
+│   └── main.py          # FastAPI application entry point
+├── alembic/             # migration files
+├── tests/               # automated tests
+├── docker/              # Docker-related files
+│   ├── Dockerfile
+│   └── docker-compose.yml
 ├── requirements.txt
-├── .env
 ├── .env.sample
+├── alembic.ini
 ├── .gitignore
 └── README.md
-```
+
+---
+
+## Architecture
+
+This project follows a layered architecture to keep responsibilities separated and the codebase easier to maintain.
+
+- **Routers** handle HTTP requests and responses
+- **Services** contain business logic
+- **Repositories** manage database operations
+- **Schemas** define request and response validation
+- **Models** represent database tables
+- **Core** contains configuration, security, and database setup
+
+This structure improves readability, testability, and scalability as the project grows.
 
 ---
 
@@ -75,179 +91,303 @@ project-root
 
 ### 1. Clone the repository
 
-```
-git clone https://github.com/glbvnd/FastAPI-JWT-service.git
-cd FastAPI-JWT-service
+```bash
+git clone https://github.com/glbvnd/fastAPI_jwt_service.git
+cd fastAPI_jwt_service
 ```
 
----
+### 2. Create and activate a virtual environment
 
-### 2. Create virtual environment
-
-```
+```bash
 python -m venv venv
 ```
 
-Activate:
+On Linux/macOS:
 
-Linux / macOS
-
-```
+```bash
 source venv/bin/activate
 ```
 
-Windows
+On Windows:
 
-```
+```bash
 venv\Scripts\activate
 ```
 
----
-
 ### 3. Install dependencies
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
----
-
 ### 4. Configure environment variables
 
-Create `.env` from the example:
+Create a local environment file:
 
-```
+```bash
 cp .env.sample .env
 ```
 
 Example configuration:
 
-```
+```env
 DATABASE_URL=postgresql://user:password@localhost:5432/auth_db
 SECRET_KEY=supersecretkey
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 
----
-
 ### 5. Run database migrations
 
-```
+```bash
 alembic upgrade head
 ```
 
+### 6. Start the application
+
+```bash
+uvicorn api.v1.auth_v1:app --reload
+```
+
+The API will be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+Swagger documentation:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+ReDoc documentation:
+
+```text
+http://127.0.0.1:8000/redoc
+```
+
 ---
 
-### 6. Start the API server
+## API Endpoints
 
-```
-uvicorn app.main:app --reload
-```
+Below are example authentication-related endpoints. Update these paths if your actual routes use a different prefix.
 
-Server will start at:
+### Register
 
-```
-http://localhost:8000
-```
-
-Interactive API documentation:
-
-```
-http://localhost:8000/docs
-```
-
----
-
-## API Example
-
-### Register User
-
-```
+```http
 POST /auth/register
 ```
 
-Request:
+Example request body:
 
-```
+```json
 {
   "email": "user@example.com",
+  "username": "testuser",
   "password": "strongpassword"
 }
 ```
 
-Response:
-
-```
-{
-  "id": 1,
-  "email": "user@example.com"
-}
-```
-
----
-
 ### Login
 
-```
+```http
 POST /auth/login
 ```
 
-Response:
+Example response:
 
-```
+```json
 {
-  "access_token": "jwt_token_here",
+  "access_token": "your_jwt_token",
   "token_type": "bearer"
 }
 ```
 
----
+### Current User
 
-### Access Protected Route
-
-Header:
-
+```http
+GET /auth/me
 ```
+
+Example header:
+
+```http
 Authorization: Bearer <access_token>
 ```
 
 ---
 
+## Middleware
+
+The project currently includes **CORS middleware** for handling cross-origin requests during development.
+
+Example development configuration:
+
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+### Notes
+
+- `CORSMiddleware` is already integrated into the application
+- CORS settings should be configured differently for development and production
+- In production, `allow_origins` should contain only trusted frontend domains
+- Credential-based requests should be enabled only when required by the authentication flow
+
+---
+
+## Production Readiness
+
+This project is built with several production-oriented ideas in mind, even if some parts may still be under active development.
+
+### Implemented or Intended Practices
+
+- Layered architecture for maintainability
+- Environment-based configuration
+- Secure JWT authentication flow
+- Password hashing
+- Migration-based database schema management
+- Middleware-based request handling
+- Testable project structure
+
+### Recommended Production Setup
+
+- Restrict CORS origins to trusted domains
+- Store secrets in environment variables
+- Never commit `.env` files or credentials
+- Use HTTPS in deployment
+- Use `HttpOnly`, `Secure`, and `SameSite` cookie settings if cookies are used for authentication
+- Run the application behind a reverse proxy such as Nginx
+- Use process managers or container orchestration for reliability
+- Add structured logging and monitoring
+- Add rate limiting for authentication endpoints
+- Add refresh token rotation if using long-lived sessions
+
+---
+
 ## Running Tests
 
-```
+Run all tests:
+
+```bash
 pytest
+```
+
+Run tests with verbose output:
+
+```bash
+pytest -v
 ```
 
 ---
 
 ## Database Migrations
 
-Create migration:
+Create a new migration:
 
-```
-alembic revision --autogenerate -m "add user table"
+```bash
+alembic revision --autogenerate -m "describe your change"
 ```
 
-Apply migration:
+Apply migrations:
 
-```
+```bash
 alembic upgrade head
+```
+
+Rollback the last migration:
+
+```bash
+alembic downgrade -1
 ```
 
 ---
 
 ## Docker
 
-Build and run the project using Docker:
+To build and run the project with Docker:
 
-```
+```bash
 docker-compose up --build
 ```
+
+If your project uses a different Docker setup, update this section accordingly.
+
+---
+
+## Environment Variables
+
+| Variable | Description |
+| --- | --- |
+| `DATABASE_URL` | PostgreSQL connection string |
+| `SECRET_KEY` | Secret key used to sign JWT tokens |
+| `ALGORITHM` | JWT signing algorithm |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | Access token expiration time |
+
+---
+
+## Screenshots
+
+You can add project screenshots to make the repository more presentable.
+
+Suggested examples:
+
+- Swagger UI
+![Swagger UI](docs/screenshots/swaggerUI.png)
+- Register endpoint
+![Register](docs/screenshots/register.png) 
+- Login endpoint
+![Login](docs/screenshots/login.png) 
+- Protected route example 
+![Protected Route](docs/screenshots/me.png) 
+- Schemas
+![Schemas](docs/screenshots/schemas.png) 
+
+Example structure:
+
+```text
+docs/
+└── screenshots/
+    ├── swagger.png
+    ├── register.png
+    ├── login.png
+    ├── schemas.png
+    └── me.png
+```
+
+Then reference them like this:
+
+```md
+![Swagger UI](docs/screenshots/swagger.png)
+```
+
+---
+
+## Development Notes
+
+This project is being developed as a learning-focused backend service with real-world architectural practices. The goal is not only to implement authentication features, but also to build the project in a maintainable, testable, and deployment-friendly way.
 
 ---
 
 ## License
 
-MIT License
+This project is licensed under the MIT License.
+```
+
+چند نکته برای بهتر شدن نهایی README:
+- اگر routeهای واقعی‌ات `auth` نیستند، حتماً endpointها را با مسیر واقعی خودت جایگزین کن
+- اگر از cookie-based auth استفاده می‌کنی، می‌توانم بخش cookie security را هم دقیق‌تر و حرفه‌ای‌تر کنم
+- اگر middlewareهای دیگری مثل logging یا exception handling هم داری، خوبه آن‌ها را هم در بخش `Middleware` اضافه کنیم
+- اگر خواستی README خیلی رزومه‌ای‌تر شود، می‌توانم یک نسخه کوتاه‌تر و شیک‌تر هم بدهم
+
+اگر بخواهی، قدم بعدی می‌توانم یکی از این‌ها را انجام بدهم:
+1. README را با routeهای واقعی پروژه‌ات دقیقاً شخصی‌سازی کنم
+2. یک `.env.sample` حرفه‌ای هم کنارش بنویسم
+3. بخش `Tests` و `Production Readiness` را مخصوص پروژه خودت قوی‌تر کنم

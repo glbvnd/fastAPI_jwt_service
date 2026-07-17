@@ -19,7 +19,7 @@ router = APIRouter()
 
 
 # routers
-@router.post(
+@router.get(
     "/me",
     status_code=status.HTTP_200_OK,
     response_model=UserOutSchema,
@@ -101,7 +101,7 @@ async def delete_account(
 ):
     if not refresh_token:
         raise HTTPException(status_code=401, detail="Missing refresh token")
-    
+
     await service.delete_account(
         plain_password=request.password, plain_refresh_token=refresh_token
     )
