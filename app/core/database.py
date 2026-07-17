@@ -1,31 +1,27 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.ext.asyncio import (
+    create_async_engine,
+    async_sessionmaker,
+    AsyncSession,
+)
+from sqlalchemy.orm import DeclarativeBase
 from .config import settings
 
+DATABASE_URL = settings.SQLALCHEMY_DATABASE_URL
+
+connect_args = {}
+if DATABASE_URL.startswith("sqlite"):
+    connect_args = {"check_same_thread": False}
+
+engine = create_async_engine(DATABASE_URL, connect_args=connect_args, echo=True)
+AsyncSessionLocal = async_sessionmaker(
+    bind=engine, class_=AsyncSession, expire_on_commit=False
+)
 
 
-DATABASE_URL= settings.SQLALCHEMY_DATABASE_URL
-
-connect_args ={}
-if DATABASE_URL.startswith("sqlile"):
-    connect_args ={"check_same_thered": False}
-
-engine = create_engine(DATABASE_URL, connect_args=connect_args)
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine)
-Base = declarative_base()
+class Base(DeclarativeBase):
+    pass
 
 
-def get_session():
-    session = SessionLocal()
-    try:
+async def get_db():
+    async with AsyncSessionLocal() as session:
         yield session
-
-    except Exception:
-        session.rollback()
-        raise  # just raise
-
-    finally:
-        session.close()        

@@ -1,0 +1,21 @@
+# استفاده از نسخه سبک پایتون
+FROM python:3.13-slim
+
+# تعیین پوشه کاری در کانتینر
+WORKDIR /app
+
+# کپی کردن لیست نیازمندی‌ها
+COPY requirements.txt .
+
+# نصب کتابخانه‌ها
+RUN pip install --no-cache-dir -i https://mirror-pypi.runflare.com/simple --upgrade pip \
+    && pip install --no-cache-dir -i https://mirror-pypi.runflare.com/simple -r requirements.txt
+# کپی کردن تمام فایل‌های پروژه به کانتینر
+COPY . .
+
+# اضافه کردن ریشه پروژه به PYTHONPATH برای اینکه پایتون پوشه api را بشناسد
+ENV PYTHONPATH=/app
+
+# دستور اجرای برنامه
+# توجه: چون فایل تو در api/v1/auth_v1.py است، مسیر ماژول به صورت زیر می‌شود:
+CMD ["uvicorn", "api.v1.auth_v1:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

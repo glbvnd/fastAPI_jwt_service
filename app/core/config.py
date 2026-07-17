@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     JWT_SECRET_KEY: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     REFRESH_TOKEN_EXPIRE_DAYS: int
-    model_config = SettingsConfigDict(env_file=str(BASE_DIR/".env"))
+    model_config = SettingsConfigDict(env_file=str(BASE_DIR / ".env"))
 
 
 settings = Settings()

@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: ..         # یعنی برو به پوشه ریشه پروژه
+      dockerfile: docker/DockerFile
+    container_name: fastapi_auth_app
+    ports:
+      - "8001:8000"
+    volumes:
+      - ..:/app           # کل ریشه پروژه را به پوشه app وصل کن
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./sqlite_docker_app.db
+    restart: always
