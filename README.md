@@ -43,7 +43,10 @@ This project is designed with a clean layered architecture and focuses on authen
 - Docker
 
 ---
-
+<p align="center">
+  <img src="./docs/screenshots/swaggerui.png" alt="Swagger UI" width="35%"/>
+  <img src="./docs/screenshots/me.png" alt="Protected Route" width="45%"/>
+</p>
 ## Project Structure
 
 ```text
@@ -339,9 +342,12 @@ If your project uses a different Docker setup, update this section accordingly.
 
 ## Screenshots
 
+<details>
+  <summary><b>Click to expand/collapse project screenshots</b></summary>
+
 ### Swagger UI
 
-![Swagger UI](./docs/screenshots/routers.png)
+![Swagger UI](./docs/screenshots/swaggerui.png)
 
 ### Register Endpoint
 
@@ -355,10 +361,7 @@ If your project uses a different Docker setup, update this section accordingly.
 
 ![Protected Route](./docs/screenshots/me.png)
 
-### Schemas
-
-![Schemas](./docs/screenshots/schemas.png)
-
+</details>
 ---
 
 ## Development Notes
@@ -371,6 +374,3 @@ This project is being developed as a learning-focused backend service with real-
 
 This project is licensed under the MIT License.
 
-```
-
-```
